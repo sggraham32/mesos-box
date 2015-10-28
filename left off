@@ -1,0 +1,6 @@
+move away from yml to json form of cluster configuration
+
+write scripts to build the box (install java and mesosphere repos)
+
+write scripts to install and configure the mesos master (includes mesos-master, zookeeper, marathon, chronos)
+write scripts to install and configure mesos workers
