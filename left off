@@ -1,4 +1,4 @@
-
-
 write scripts to install and configure the mesos master (includes mesos-master, zookeeper, marathon, chronos)
+!! works with single master, something wierd with multi master not finding the master
+
 write scripts to install and configure mesos workers

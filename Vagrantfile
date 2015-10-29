@@ -15,6 +15,7 @@ zk_id = 1
 #prior to configuration, compute the quorum size ceiling(number of masters divided by 2)
 masters = cluster['masters'].select{|m| m['run'].include? 'master'};
 master_quorum = (masters.length/2.0).ceil
+node_ip=""
 
 Vagrant.configure(2) do |config|
 
@@ -33,7 +34,9 @@ Vagrant.configure(2) do |config|
       end
       
       cfg.vm.hostname = master['hostname']
-      cfg.vm.network "private_network", ip: cluster['master_ipbase']+"#{10+i}"
+
+      node_ip=cluster['master_ipbase']+"#{10+i}"
+      cfg.vm.network "private_network", ip: node_ip
       
       cfg.vm.provision "shell" do |s|
         s.path = "scripts/stop_all_services.sh"
@@ -44,30 +47,35 @@ Vagrant.configure(2) do |config|
         
         case component
         when "zookeeper"
-          puts 'Configuring zookeeper on ',master['hostname'],' ...'
+          print 'Configuring zookeeper on ',master['hostname']
+          puts ' ...'
           cfg.vm.provision "shell" do |s|
             s.path = script_name
             s.args = [zk_id, zk_ips]
           end
           zk_id = zk_id + 1
         when "master"
-          puts 'Configuring mesos-master on ',master['hostname'],' ...'
+          print 'Configuring mesos-master on ',master['hostname']
+          puts ' ...'
           cfg.vm.provision "shell" do |s|
             s.path = script_name
-            s.args = [master_quorum, zk_ips]
+            s.args = [master_quorum, zk_ips, node_ip, cluster['cluster_name']]
           end
 		when "marathon"
-		  puts 'Configuring marathon on ',master['hostname'],' ...'
+		  print 'Configuring marathon on ',master['hostname']
+          puts ' ...'
           cfg.vm.provision "shell" do |s|
             s.path = script_name
           end
         when "chronos"
-          puts 'Configuring chronos on ',master['hostname'],' ...'
+          print 'Configuring chronos on ',master['hostname']
+          puts ' ...'
           cfg.vm.provision "shell" do |s|
             s.path = script_name
           end
         else
-          puts 'Ignoring component', component, ' on ',master['hostname'],' ...' 
+          print 'Ignoring component', component, ' on ',master['hostname']
+          puts ' ...' 
         end
       end
     end
