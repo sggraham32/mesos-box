@@ -2,3 +2,38 @@
 #set -x #echo on
 
 echo configure-master...
+#$1 expected to be the quorum size for the master cluster
+#$2 expected to be a comma separated list of ip addresses (in zookeeper id order)
+
+#follows https://open.mesosphere.com/getting-started/datacenter/install/
+
+#Set /etc/mesos/zk to:
+#     zk://1.1.1.1:2181,2.2.2.2:2181,3.3.3.3:2181/mesos
+zk_str="zk://"
+
+IFS=","
+zk_ips=($2)
+
+num_ips=${#zk_ips[@]}
+
+unset IFS
+for i in "${!zk_ips[@]}"
+do
+  zk_str=$zk_str"${zk_ips[$i]}"":2181"
+  if (($i < $num_ips-1)); then
+    zk_str+=,
+  fi
+done
+zk_str=$zk_str"/mesos"
+
+echo $zk_str | tee /etc/mesos/zk
+
+# Set /etc/mesos-master/quorum on each master node to a number greater than the number of masters divided by 2.
+echo $1 | tee /etc/mesos-master/quorum
+
+# Disable mesos-slave service
+# sudo sh -c "echo manual > /etc/init/mesos-slave.override"
+echo manual | tee /etc/init/mesos-slave.override
+
+#restart the mesos-master service
+service mesos-master restart

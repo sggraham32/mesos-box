@@ -13,12 +13,12 @@
       "hostname" : "master2",
       "mem" : 256,
       "cpus" : 1,
-      "run" : ["zookeeper"]
+      "run" : ["master","zookeeper"]
     },      {
       "hostname" : "master3",
       "mem" : 256,
       "cpus" : 1,
-      "run" : ["zookeeper"]
+      "run" : ["master","zookeeper"]
     }  
   ],
   
