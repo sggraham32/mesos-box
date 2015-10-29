@@ -8,8 +8,18 @@
       "hostname" : "master1",
       "mem" : 1024,
       "cpus" : 2,
-      "run" : ["mesos", "marathon", "chronos", "zookeeper"]
-    }
+      "run" : ["master", "marathon", "chronos", "zookeeper"]
+    },    {
+      "hostname" : "master2",
+      "mem" : 256,
+      "cpus" : 1,
+      "run" : ["zookeeper"]
+    },      {
+      "hostname" : "master3",
+      "mem" : 256,
+      "cpus" : 1,
+      "run" : ["zookeeper"]
+    }  
   ],
   
   "worker_ipbase" : "172.31.1.",
