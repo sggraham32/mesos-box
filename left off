@@ -6,9 +6,6 @@ Need to figure out a way to install zookeeper independently of mesos
 write scripts to install and configure the mesos master (includes mesos-master, zookeeper, marathon, chronos)
 !! works with single master, something weird with multi master not finding the master
 
-write scripts to install and configure mesos workers
-!! slaves not connecting back to master for some reason
-!! looks like none of the file based things are working, nor is the service crap.  @#$it invoke commands directly and export vars
 
 make it so vagrant destroy doesnt invoke the provisioning scripts
 put a provisioner do block around the provisioning scripts
