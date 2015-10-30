@@ -21,4 +21,4 @@ update-alternatives --config java
 update-alternatives --config javac
 
 #install mesos marathon chronos
-apt-get -y install mesos marathon chronos
+#apt-get -y install mesos marathon chronos

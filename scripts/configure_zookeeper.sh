@@ -6,6 +6,8 @@ echo configure-zookeeper...
 #$2 expected to be a comma separated list of ip addresses (in zookeeper id order)
 
 #follows https://open.mesosphere.com/getting-started/datacenter/install/
+#Assumes mesos already installed!!!
+#TDOD - independent install of zookeeper
 
 #Set /etc/zookeeper/conf/myid
 echo $1 | tee /etc/zookeeper/conf/myid

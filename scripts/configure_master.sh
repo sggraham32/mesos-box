@@ -8,6 +8,7 @@ echo configure-master...
 #$4 is the cluster name
 
 #follows https://open.mesosphere.com/getting-started/datacenter/install/
+apt-get -y install mesos
 
 #Set /etc/mesos/zk to:
 #     zk://1.1.1.1:2181,2.2.2.2:2181,3.3.3.3:2181/mesos
@@ -46,6 +47,7 @@ echo $4 | tee /etc/mesos-master/cluster
 
 # Disable mesos-slave service
 # sudo sh -c "echo manual > /etc/init/mesos-slave.override"
+service mesos-slave stop
 echo manual | tee /etc/init/mesos-slave.override
 
 #restart the mesos-master service
