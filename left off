@@ -1,11 +1,14 @@
-rethink the base box, just have it install java and the repos, 
 
-DONT do the apt-get -y install crap, do that in the individual boxes
 Need to figure out a way to install zookeeper independently of mesos
 
 write scripts to install and configure the mesos master (includes mesos-master, zookeeper, marathon, chronos)
-!! works with single master, something weird with multi master not finding the master
-
+!! works with single master, 
+!! Multi master sometimes goes into a strange situation where masters cannot establish leader
+!! in those situations where leader is assigned, slave does not register with master, status updates are suspended 
+	I1030 20:49:59.897480  2746 slave.cpp:705] New master detected at master@172.31.0.10:5050
+	I1030 20:49:59.897699  2746 slave.cpp:730] No credentials provided. Attempting to register without authentication
+	I1030 20:49:59.897754  2746 slave.cpp:741] Detecting new master
+	I1030 20:49:59.897801  2746 status_update_manager.cpp:176] Pausing sending status updates
 
 make it so vagrant destroy doesnt invoke the provisioning scripts
 put a provisioner do block around the provisioning scripts
